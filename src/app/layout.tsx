@@ -23,9 +23,22 @@ const jetbrainsMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "SeekerChat",
-  description: "The trading floor for Solana Seeker holders",
+  title: "SeekerChat — The Trading Floor for Seeker Holders",
+  description: "Where Solana traders talk, not just trade. Real-time trading rooms, on-chain portfolio tracking, and Seeker-verified community for Solana Seeker device holders.",
   manifest: "/manifest.json",
+  keywords: ["Solana", "Seeker", "trading", "chat", "crypto", "DeFi", "social trading"],
+  authors: [{ name: "SeekerChat" }],
+  openGraph: {
+    title: "SeekerChat — The Trading Floor for Seeker Holders",
+    description: "Where Solana traders talk, not just trade. Real-time trading rooms and on-chain portfolio tracking.",
+    type: "website",
+    siteName: "SeekerChat",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SeekerChat — The Trading Floor for Seeker Holders",
+    description: "Where Solana traders talk, not just trade.",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
