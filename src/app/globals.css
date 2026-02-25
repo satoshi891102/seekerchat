@@ -1,26 +1,243 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
+/* ── JetBrains Mono Variable (local, self-hosted) ── */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("/fonts/JetBrainsMono-Variable.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── Design Tokens ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background */
+  --bg-primary: oklch(0.13 0.01 260);
+  --bg-surface: oklch(0.18 0.01 260);
+  --bg-surface-hover: oklch(0.22 0.01 260);
+  --bg-elevated: oklch(0.24 0.01 260);
+  --bg-overlay: oklch(0.13 0.01 260 / 0.8);
+
+  /* Text */
+  --text-primary: oklch(0.97 0 0);
+  --text-secondary: oklch(0.55 0.01 260);
+  --text-tertiary: oklch(0.4 0.01 260);
+  --text-inverse: oklch(0.13 0.01 260);
+
+  /* Accent — signal colors (used sparingly) */
+  --accent-green: oklch(0.72 0.19 155);
+  --accent-red: oklch(0.62 0.2 25);
+  --accent-amber: oklch(0.75 0.15 75);
+  --accent-blue: oklch(0.65 0.15 250);
+  --accent-purple: oklch(0.6 0.15 300);
+
+  /* Subtle backgrounds for accent colors */
+  --green-subtle: oklch(0.72 0.19 155 / 0.12);
+  --red-subtle: oklch(0.62 0.2 25 / 0.12);
+  --amber-subtle: oklch(0.75 0.15 75 / 0.12);
+  --blue-subtle: oklch(0.65 0.15 250 / 0.12);
+  --purple-subtle: oklch(0.6 0.15 300 / 0.12);
+
+  /* Borders */
+  --border-primary: oklch(0.25 0.01 260);
+  --border-subtle: oklch(0.2 0.01 260);
+
+  /* Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Spacing — mobile-first safe areas */
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --nav-height: 4.5rem;
+
+  /* Motion */
+  --spring-stiffness: 300;
+  --spring-damping: 24;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px oklch(0 0 0 / 0.3), 0 1px 2px oklch(0 0 0 / 0.2);
+  --shadow-elevated: 0 4px 12px oklch(0 0 0 / 0.4);
 }
 
+/* ── Tailwind v4 Theme Mapping ── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colors */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-surface-hover: var(--bg-surface-hover);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-overlay: var(--bg-overlay);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-inverse: var(--text-inverse);
+
+  --color-accent-green: var(--accent-green);
+  --color-accent-red: var(--accent-red);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-purple: var(--accent-purple);
+
+  --color-green-subtle: var(--green-subtle);
+  --color-red-subtle: var(--red-subtle);
+  --color-amber-subtle: var(--amber-subtle);
+  --color-blue-subtle: var(--blue-subtle);
+  --color-purple-subtle: var(--purple-subtle);
+
+  --color-border-primary: var(--border-primary);
+  --color-border-subtle: var(--border-subtle);
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    sans-serif;
+  --font-mono: "JetBrains Mono", var(--font-geist-mono), ui-monospace,
+    SFMono-Regular, monospace;
+
+  /* Shadows */
+  --shadow-card: var(--shadow-card);
+  --shadow-elevated: var(--shadow-elevated);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base Reset ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* Safe area insets handled per-component via --safe-bottom and --safe-top */
+
+/* ── Selection ── */
+::selection {
+  background: oklch(0.72 0.19 155 / 0.3);
+  color: var(--text-primary);
+}
+
+/* ── Scrollbar — slim dark ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.3 0.01 260);
+  border-radius: var(--radius-full);
+}
+
+/* ── Utility Classes ── */
+.font-mono-numbers {
+  font-family: "JetBrains Mono", var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Green pulsing live indicator */
+@keyframes pulse-live {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.animate-pulse-live {
+  animation: pulse-live 2s ease-in-out infinite;
+}
+
+/* Shimmer loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--bg-surface-hover) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Spin for loading states */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
+}
+
+/* Touch target minimum */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ── Focus Visible — consistent green ring for keyboard navigation ── */
+:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Remove focus ring for pointer interactions */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
